@@ -61,7 +61,7 @@ const hall_booking = [
 app.use(express.json());
 app.use("/hall-booking", hallBookingRouter);
 app.get('/', (req, res) => {
-    res.send(`Welcome to Hall Booking API in Port ${PORT}`)
+    res.send(`Welcome to Hall Booking API in Port ${PORT} and endpoint is "/hall-booking"`)
 })
 // app.get('/hall-booking', async (req, res) => {
 //     //const hall = await client.db("HallBookingAPI").collection("Hall").find({}).toArray();
