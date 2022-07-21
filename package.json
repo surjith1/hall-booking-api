@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start":"node index.js",
-    "nodemon-dev":"nodemon index.js",
+    "start": "node index.js",
+    "nodemon-dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Surjith Vijayakumar",
@@ -16,8 +16,14 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "express-async-errors": "^3.1.1",
+    "handlebars": "^4.7.7",
+    "joi": "^17.6.0",
+    "joi-password-complexity": "^5.1.0",
     "jsonwebtoken": "^8.5.1",
-    "mongodb": "^4.7.0"
+    "mongodb": "^4.7.0",
+    "mongoose": "^6.4.3",
+    "nodemailer": "^6.7.7"
   },
   "devDependencies": {
     "nodemon": "^2.0.16"
