@@ -2,10 +2,12 @@ import express from "express";
 import { MongoClient } from "mongodb";
 import cors from 'cors';
 import env from 'dotenv';
+import {movieRouter} from './routes/movies.js'
+import { usersRouter } from "./routes/users.js";
 
 const app = express();
 env.config();
-console.log(process.env);
+//console.log(process.env);
 const PORT = process.env.PORT;
 const MONGO_URL=process.env.MONGO_URL;
  const createConection = async ()=> {
@@ -14,7 +16,7 @@ const MONGO_URL=process.env.MONGO_URL;
     console.log("Mongo Db is Connected ✌ 😊 👌.");
     return client;
  }
- const client = await createConection();
+ export const client = await createConection();
 app.use(cors());
 const movies = [
     {
@@ -100,35 +102,12 @@ const movies = [
 ];
 //express.json() //Converting to JSON 
 app.use(express.json());
+app.use("/movies", movieRouter);
+app.use("/users", usersRouter);
 app.get('/', (req, res) => {
     res.send(`Hi Welcome to Port ${PORT} `)
 })
-app.get('/movies', async (req, res) => {
-    const movie = await client.db("Movies").collection("moviesList").find({}).toArray();
-    res.send(movie);
-})
-app.get('/movies/:id', async (req, res) => {
-    const {id} =req.params;
-    const movie = await client.db("Movies").collection("moviesList").findOne({id:id});
-    //const movie = movies.find((mv)=>mv.id===id)
-    movie ? res.send(movie) : res.status(401).send({msg:"No Such Movie Found"});
-})
-app.post('/movies', async (req, res) => {
-    const data = req.body;
-    const result = await client.db("Movies").collection("moviesList").insertMany(data);
-    res.send(result);
-})
 
-app.delete('/movies/:id', async (req, res) => {
-    const {id} =req.params;
-    const movie = await client.db("Movies").collection("moviesList").deleteOne({id:id});
-    //const movie = movies.find((mv)=>mv.id===id)
-    movie.deletedCount > 0 ? res.send(movie) : res.status(401).send({msg:"No Such Movie Found"});
-})
-app.put('/movies/:id', async (req, res) => {
-    const data = req.body;
-    const {id} = req.params;
-    const result = await client.db("Movies").collection("moviesList").updateOne({id:id},{$set:data});
-    res.send(result);
-})
 app.listen(PORT, () => console.log(`Local host running on ${PORT}`));
+
+
